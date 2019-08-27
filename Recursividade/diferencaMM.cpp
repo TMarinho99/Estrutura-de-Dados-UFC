@@ -7,12 +7,10 @@ int diferencaMM(int *A,int n, int maior, int menor){
             return maior-menor;
         if(maior<A[n]){
             maior = A[n];
-            cout << "maior " << maior << endl;
             return diferencaMM(A,n-1,maior,menor);
         }
         if(menor > A[n]){
             menor = A[n];
-            cout << "menor " << menor << endl;
             return diferencaMM(A,n-1,maior,menor);
         }else
             return diferencaMM(A,n-1,maior,menor);

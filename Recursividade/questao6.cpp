@@ -3,7 +3,7 @@ using namespace std;
 
 void imprimir(int n, int k){
     if(n>0 && k>0)
-        cout << imprimir(n-1,k);
+        cout << n
     else
         return;
     
