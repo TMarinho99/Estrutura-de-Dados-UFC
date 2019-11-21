@@ -24,7 +24,10 @@ public:
     void insertionsortRecursivo(int size_v);    // função insertionsort recursiva
     void selectionsorttInterativo();            // função insertionsort interativa
     void selectionsorttRecursivo(int size_v, int index);// função insertionsort recursiva
-
+    void mergesort(int p, int r);               // função mergesort
+    void heapsortInterativo(int size_v);
+    void heapsortRecursivo();
+    void quicksort(int p, int r);
 
 
 };

@@ -70,7 +70,7 @@ void ordenacaoVetor::insertionsortRecursivo(int size_v){
     insertionsortRecursivo(size_v-1);
 
     int ultimo = v[size_v-1];
-    int j = size_v-1;
+    int j = size_v-2;
 
     while(j >= 0 && v[j]>ultimo){
         v[j+1] = v[j];
@@ -87,7 +87,7 @@ void ordenacaoVetor::selectionsorttInterativo(){
             if(v[j]<v[min])
                 min = j;
 
-        swap(v[i],v[min]);    
+        swap(v[min],v[i]);    
         
     }
     
@@ -99,7 +99,7 @@ int minIndex(int *v,int i, int j){
 
     int k = minIndex(v,i+1, j);
 
-    return (v[i]<v[j])? i : k;    
+    return (v[i] < v[k])? i : k;    
 
 }
 
@@ -117,6 +117,123 @@ void ordenacaoVetor::selectionsorttRecursivo(int size_v, int index){
 
 }
 
-ordenacaoVetor::~ordenacaoVetor(){
+void merge (int A[], int p, int q, int r) {
+ int i, j, k;
+ int *W = new int[r-p+1]; // Vetor auxiliar
+ i = p; j = q+1; k = 0;
+ // Intercala A[p..q] e A[q+1..r]
+    while (i <= q && j <= r) {
+        if (A[i] <= A[j])
+            W[k++] = A[i++];
+        else
+            W[k++] = A[j++];
+    }
+    while (i <= q) W[k++] = A[i++];
+    while (j <= r) W[k++] = A[j++];
+    // Copia vetor ordenado W para o vetor A
+    for (i = p; i <= r; i++)
+        A[i] = W[i-p];
+    delete[] W;
+}
 
+void ordenacaoVetor::mergesort(int p, int r){
+    if (p < r) {
+        int q = (p + r) / 2; // Dividir
+        // Conquistar
+        mergesort(p, q);
+        mergesort(q + 1, r);
+        // Combinar
+        merge(v, p, q, r);
+ }
+}
+
+void ordenacaoVetor::heapsortInterativo(int size_v){
+    
+   int i = size_v / 2, pai, filho, t;
+   while(true) {
+      if (i > 0) {
+          i--;
+          t = v[i];
+      } else {
+          size_v--;
+          if (size_v <= 0) return;
+          t = v[size_v];
+          v[size_v] = v[0];
+      }
+      pai = i;
+      filho = i * 2 + 1;
+      while (filho < size_v) {
+          if ((filho + 1 < size_v)  &&  (v[filho + 1] > v[filho]))
+              filho++;
+          if (v[filho] > t) {
+             v[pai] = v[filho];
+             pai = filho;
+             filho = pai * 2 + 1;
+          } else {
+             break;
+          }
+      }
+      v[pai] = t;
+   }
+}
+
+void heapify(int arr[], int n, int i) { 
+    int largest = i; // Initialize largest as root 
+    int l = 2 * i + 1; // left = 2*i + 1 
+    int r = 2 * i + 2; // right = 2*i + 2 
+  
+    // If left child is larger than root 
+    if (l < n && arr[l] > arr[largest]) 
+        largest = l; 
+  
+    // If right child is larger than largest so far 
+    if (r < n && arr[r] > arr[largest]) 
+        largest = r; 
+  
+    // If largest is not root 
+    if (largest != i) { 
+        swap(arr[i], arr[largest]); 
+  
+        // Recursively heapify the affected sub-tree 
+        heapify(arr, n, largest); 
+    } 
+} 
+
+void ordenacaoVetor::heapsortRecursivo(){
+    for (int i = size_v / 2 - 1; i >= 0; i--) 
+        heapify(v, size_v, i);
+
+    for (int i = size_v - 1; i >= 0; i--) { 
+        // Move current root to end 
+        swap(v[0], v[i]); 
+  
+        // call max heapify on the reduced heap 
+        heapify(v, i, 0); 
+    } 
+}
+
+int separa (int v[], int p, int r) {
+    int c = v[r];
+    int j = p;
+        for (int k = p; k < r; k++) {
+            if (v[k] <= c) {
+                swap(v[k], v[j]);
+                j++;
+            }
+        }
+        v[r] = v[j];
+        v[j] = c;
+        return j;
+}
+
+void ordenacaoVetor::quicksort(int p, int r){
+    if (p < r) {
+        int i = separa(v, p, r);
+        quicksort(p, i-1);
+        quicksort(i+1, r);
+     }
+}
+
+ordenacaoVetor::~ordenacaoVetor(){
+    
 }
