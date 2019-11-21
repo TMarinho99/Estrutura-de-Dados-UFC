@@ -16,6 +16,7 @@ int diferencaMM(int *A,int n, int maior, int menor){
             return diferencaMM(A,n-1,maior,menor);
         
 }
+
 int main(){
     int n;
     cin >> n;
